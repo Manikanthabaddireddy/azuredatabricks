@@ -16,8 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "MySqlSource",
-						"query": "select * from employees where employee_id%2==0;"
+						"type": "MySqlSource"
 					},
 					"sink": {
 						"type": "ParquetSink",
@@ -29,6 +28,20 @@
 						}
 					},
 					"enableStaging": false,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Warning",
+							"enableReliableLogging": false
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "AzureBlobStorage",
+								"type": "LinkedServiceReference"
+							},
+							"path": "input/logging"
+						}
+					},
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
