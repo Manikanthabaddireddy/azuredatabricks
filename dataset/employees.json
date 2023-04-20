@@ -1,0 +1,15 @@
+{
+	"name": "employees",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "rdsmysql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`employees`"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"name": "rdsmysql",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"connectionString": "server=google.cxern8ov7va0.ap-south-1.rds.amazonaws.com;port=3306;database=hr;user=admin;sslmode=1;usesystemtruststore=0",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBDMUI4NjMyLUJDQzAtNEM3Mi1CRkFFLTk5NTFGMzM0NjJDOF83MzIyNjhlZi1mMWMzLTQ2ODEtODllNi1kOGQwOTMxYTc1YzUiDQp9"
+		}
+	}
+}
