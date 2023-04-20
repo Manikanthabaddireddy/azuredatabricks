@@ -19,19 +19,24 @@
 						"type": "MySqlSource"
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
+					"parallelCopies": 6,
+					"enableSkipIncompatibleRow": true,
+					"validateDataConsistency": false,
 					"logSettings": {
 						"enableCopyActivityLog": true,
 						"copyActivityLogSettings": {
-							"logLevel": "Warning",
+							"logLevel": "Info",
 							"enableReliableLogging": false
 						},
 						"logLocationSettings": {
@@ -59,7 +64,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Parquet1",
+						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					}
 				]
