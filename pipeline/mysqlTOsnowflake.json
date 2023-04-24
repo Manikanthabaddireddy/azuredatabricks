@@ -27,10 +27,10 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "AzureBlobStorage",
+							"referenceName": "linkedService1",
 							"type": "LinkedServiceReference"
 						},
-						"path": "input"
+						"path": ""
 					}
 				},
 				"inputs": [
