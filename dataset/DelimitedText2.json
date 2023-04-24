@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "IPL_Matches_2008_2022.csv",
-				"folderPath": "2023-04-21",
+				"folderPath": "employees",
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",
