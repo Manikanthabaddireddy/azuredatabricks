@@ -1,9 +1,9 @@
 {
-	"name": "awsTOazure",
+	"name": "azuresqlTOgen2",
 	"properties": {
 		"activities": [
 			{
-				"name": "copying data from rds to data lake",
+				"name": "Copy data1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,32 +16,22 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "MySqlSource"
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".cvs"
 						}
 					},
 					"enableStaging": false,
-					"logSettings": {
-						"enableCopyActivityLog": true,
-						"copyActivityLogSettings": {
-							"logLevel": "Warning",
-							"enableReliableLogging": false
-						},
-						"logLocationSettings": {
-							"linkedServiceName": {
-								"referenceName": "AzureBlobStorage",
-								"type": "LinkedServiceReference"
-							},
-							"path": "input/logging"
-						}
-					},
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
@@ -53,13 +43,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "employees",
+						"referenceName": "AzureSqlTable1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Parquet1",
+						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					}
 				]

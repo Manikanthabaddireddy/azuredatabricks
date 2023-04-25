@@ -1,0 +1,26 @@
+{
+	"name": "localmysql",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"dbname": {
+				"type": "String"
+			},
+			"uname": {
+				"type": "String"
+			},
+			"pwd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"connectionString": "Server=localhost;Port=3306;Database=@{linkedService().dbname};User=@{linkedService().uname};SSLMode=1;UseSystemTrustStore=0;Password=@{linkedService().pwd}"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "MySqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "localmysql",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"dbname": "hr",
+				"uname": "root",
+				"pwd": "M@nirock55"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`employees`"
+		}
+	}
+}
