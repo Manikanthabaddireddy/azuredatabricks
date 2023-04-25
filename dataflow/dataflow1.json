@@ -40,7 +40,7 @@
 					"name": "lookup1"
 				},
 				{
-					"name": "filter1"
+					"name": "insert"
 				},
 				{
 					"name": "derivedColumn1"
@@ -49,7 +49,7 @@
 					"name": "select1"
 				},
 				{
-					"name": "filter2"
+					"name": "update"
 				},
 				{
 					"name": "derivedColumn2"
@@ -98,8 +98,8 @@
 				"azuresql, snowflake lookup(azuresql@employee_id == snowflake@EMPLOYEE_ID,",
 				"     multiple: true,",
 				"     broadcast: 'auto')~> lookup1",
-				"lookup1 filter(isNull(snowflake@EMPLOYEE_ID) || (azuresql@salary!=snowflake@SALARY)) ~> filter1",
-				"filter1 derive(isactice = 1) ~> derivedColumn1",
+				"lookup1 filter(isNull(snowflake@EMPLOYEE_ID) || (azuresql@salary!=snowflake@SALARY)) ~> insert",
+				"insert derive(isactice = 1) ~> derivedColumn1",
 				"derivedColumn1 select(mapColumn(",
 				"          employee_id = azuresql@employee_id,",
 				"          first_name = azuresql@first_name,",
@@ -116,8 +116,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"lookup1 filter(!isNull(snowflake@EMPLOYEE_ID) && (snowflake@SALARY!=azuresql@salary)) ~> filter2",
-				"filter2 derive(isactive = 0) ~> derivedColumn2",
+				"lookup1 filter(!isNull(snowflake@EMPLOYEE_ID) && (snowflake@SALARY!=azuresql@salary)) ~> update",
+				"update derive(isactive = 0) ~> derivedColumn2",
 				"derivedColumn2 select(mapColumn(",
 				"          EMPLOYEE_ID = snowflake@EMPLOYEE_ID,",
 				"          FIRST_NAME = snowflake@FIRST_NAME,",
@@ -157,6 +157,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 2,",
 				"     stageInsert: true) ~> sink1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -180,6 +181,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
 				"     stageInsert: true) ~> sink2"
 			]
 		}
