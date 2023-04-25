@@ -3,7 +3,12 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "localmysql",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"dbname": "hr",
+				"uname": "root",
+				"pwd": "M@nirock55"
+			}
 		},
 		"annotations": [],
 		"type": "MySqlTable",
