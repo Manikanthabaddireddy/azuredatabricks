@@ -1,0 +1,9 @@
+{
+	"name": "mani-7571",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
+	"location": "eastus"
+}
