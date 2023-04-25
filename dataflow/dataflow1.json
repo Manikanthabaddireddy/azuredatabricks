@@ -44,7 +44,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> azuresql",
-				"azuresql derive(FullName = concat(first_name,last_name)) ~> derivedColumn1",
+				"azuresql derive(FullName = concat(first_name,\" \",last_name)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     umask: 0022,",
