@@ -1,0 +1,20 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "AzureSqlTable2",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  AzureSqlTable2",
+					"dataset": {
+						"referenceName": "AzureSqlTable2",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared AzureSqlTable2 = let AdfDoc = Sql.Database(\"virat-server.database.windows.net\", \"hr\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dbo\",Item=\"emp\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlTable2\",\r\n  #\"Added custom\" = Table.TransformColumnTypes(Table.AddColumn(Source, \"FullName\", each [last_name] + [first_name]), {{\"FullName\", type text}}) in #\"Added custom\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}
