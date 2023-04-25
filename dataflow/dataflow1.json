@@ -1,0 +1,186 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "srcsql"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "trgsql"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "insert"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as date,",
+				"          job_id as string,",
+				"          salary as decimal(8,2),",
+				"          commission_pct as decimal(8,2),",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcsql",
+				"source(output(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as date,",
+				"          job_id as string,",
+				"          salary as decimal(8,2),",
+				"          commission_pct as decimal(8,2),",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> trgsql",
+				"srcsql, trgsql lookup(srcsql@employee_id == trgsql@employee_id,",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 filter(isNull(trgsql@employee_id) ||(srcsql@salary!=trgsql@salary)) ~> insert",
+				"insert select(mapColumn(",
+				"          employee_id = srcsql@employee_id,",
+				"          first_name = srcsql@first_name,",
+				"          last_name = srcsql@last_name,",
+				"          email = srcsql@email,",
+				"          phone_number = srcsql@phone_number,",
+				"          hire_date = srcsql@hire_date,",
+				"          job_id = srcsql@job_id,",
+				"          salary = srcsql@salary,",
+				"          commission_pct = srcsql@commission_pct,",
+				"          manager_id = srcsql@manager_id,",
+				"          department_id = srcsql@department_id",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(isactive = 1) ~> derivedColumn1",
+				"lookup1 filter(!isNull(trgsql@employee_id) && (srcsql@salary!=trgsql@salary)) ~> update",
+				"update select(mapColumn(",
+				"          employee_id = trgsql@employee_id,",
+				"          first_name = trgsql@first_name,",
+				"          last_name = trgsql@last_name,",
+				"          email = trgsql@email,",
+				"          phone_number = trgsql@phone_number,",
+				"          hire_date = trgsql@hire_date,",
+				"          job_id = trgsql@job_id,",
+				"          salary = trgsql@salary,",
+				"          commission_pct = trgsql@commission_pct,",
+				"          manager_id = trgsql@manager_id,",
+				"          department_id = trgsql@department_id",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 derive(isactive = 0) ~> derivedColumn2",
+				"derivedColumn2 alterRow(updateIf(1==1)) ~> alterRow1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as date,",
+				"          job_id as string,",
+				"          salary as decimal(8,2),",
+				"          commission_pct as decimal(8,2),",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          employee_id as integer,",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string,",
+				"          phone_number as string,",
+				"          hire_date as date,",
+				"          job_id as string,",
+				"          salary as decimal(8,2),",
+				"          commission_pct as decimal(8,2),",
+				"          manager_id as integer,",
+				"          department_id as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+			]
+		}
+	}
+}
