@@ -25,14 +25,14 @@
 						"referenceName": "SnowflakeTable1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink2"
 				},
 				{
 					"dataset": {
 						"referenceName": "SnowflakeTable1",
 						"type": "DatasetReference"
 					},
-					"name": "sink2"
+					"name": "sink3"
 				}
 			],
 			"transformations": [
@@ -135,30 +135,6 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"select2 alterRow(updateIf(1==1)) ~> alterRow1",
-				"select1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          EMPLOYEE_ID as decimal(38,0),",
-				"          FIRST_NAME as string,",
-				"          LAST_NAME as string,",
-				"          EMAIL as string,",
-				"          PHONE_NUMBER as decimal(38,0),",
-				"          HIRE_DATE as date,",
-				"          JOB_ID as string,",
-				"          SALARY as decimal(38,0),",
-				"          COMMISION_PCT as decimal(8,2),",
-				"          MANAGER_ID as decimal(38,0),",
-				"          DEPARTMENT_ID as decimal(38,0)",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     saveOrder: 1,",
-				"     stageInsert: true) ~> sink1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -182,7 +158,30 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     stageInsert: true) ~> sink2"
+				"     stageInsert: true) ~> sink2",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EMPLOYEE_ID as decimal(38,0),",
+				"          FIRST_NAME as string,",
+				"          LAST_NAME as string,",
+				"          EMAIL as string,",
+				"          PHONE_NUMBER as decimal(38,0),",
+				"          HIRE_DATE as date,",
+				"          JOB_ID as string,",
+				"          SALARY as decimal(38,0),",
+				"          COMMISION_PCT as decimal(8,2),",
+				"          MANAGER_ID as decimal(38,0),",
+				"          DEPARTMENT_ID as decimal(38,0)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true) ~> sink3"
 			]
 		}
 	}
