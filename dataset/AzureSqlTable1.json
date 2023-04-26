@@ -62,7 +62,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "target_emp"
+			"table": "emp"
 		}
 	}
 }
